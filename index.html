@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.16.5/math.min.js"></script>
+</head>
+<body>
+    <div id="calcOuter">
+        <input type="text" id="calcScreenInput" disabled>
+        <div id="calcButtons">
+            <script>
+                var buttons = [
+                    "7", "8", "9", "+",
+                    "4", "5", "6", "-",
+                    "1", "2", "3", "*",
+                    "C", "0", "=", "/"
+                ];
+                for (var i = 0; i < buttons.length; i++) {
+                    var button = document.createElement("button");
+                    button.id = "btn" + buttons[i];
+                    button.className = "calcButton";
+                    button.innerHTML = buttons[i];
+                    button.onclick = function() {
+                        if (this.innerHTML == "C") {
+                            document.getElementById("calcScreenInput").value = "";
+                        } else if (this.innerHTML == "=") {
+                            try {
+                                document.getElementById("calcScreenInput").value = math.eval(document.getElementById("calcScreenInput").value);
+                            } catch (e) {
+                                console.log(e);
+                                document.getElementById("calcScreenInput").value = "Error";
+                            }
+                        } else {
+                            document.getElementById("calcScreenInput").value += this.innerHTML;
+                        }
+                    };
+                    document.getElementById("calcButtons").appendChild(button);
+                }
+            </script> 
+        </div>
+    </div>
+</body>
+</html>
